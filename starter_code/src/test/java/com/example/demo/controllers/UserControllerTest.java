@@ -30,12 +30,12 @@ public class UserControllerTest {
     userController = new UserController(userRepository, cartRepository, bCryptPasswordEncoder);
     User user = new User();
     user.setId(1);
-    user.setUsername("LocNB3");
-    user.setPassword("LocAdmin");
+    user.setUsername("VietDC1");
+    user.setPassword("1234567");
     user.setCart(new Cart());
-    when(userRepository.findByUsername("LocNB3")).thenReturn(user);
+    when(userRepository.findByUsername("VietDC1")).thenReturn(user);
     when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-    when(bCryptPasswordEncoder.encode("LocAdmin")).thenReturn("LocAdminEncode");
+    when(bCryptPasswordEncoder.encode("1234567")).thenReturn("1234567Encode");
   }
 
   @Test
@@ -53,9 +53,9 @@ public class UserControllerTest {
 
   @Test
   public void findByUserName() {
-    ResponseEntity<User> response = userController.findByUserName("LocNB3");
+    ResponseEntity<User> response = userController.findByUserName("VietDC1");
     assertEquals(200, response.getStatusCodeValue());
-    assertEquals("LocNB3", Objects.requireNonNull(response.getBody()).getUsername());
+    assertEquals("VietDC1", Objects.requireNonNull(response.getBody()).getUsername());
   }
 
   @Test
@@ -68,22 +68,22 @@ public class UserControllerTest {
   @Test
   public void createUser() {
     CreateUserRequest request = new CreateUserRequest();
-    request.setUsername("LocNB3");
-    request.setPassword("LocAdmin");
-    request.setConfirmPassword("LocAdmin");
+    request.setUsername("VietDC1");
+    request.setPassword("1234567");
+    request.setConfirmPassword("1234567");
     ResponseEntity<User> response = userController.createUser(request);
     assertEquals(200, response.getStatusCodeValue());
     User user = response.getBody();
     assertNotNull(user);
     assertEquals(0, user.getId());
-    assertEquals("LocNB3", user.getUsername());
-    assertEquals("LocAdminEncode", user.getPassword());
+    assertEquals("VietDC1", user.getUsername());
+    assertEquals("1234567Encode", user.getPassword());
   }
 
   @Test
   public void createUserBadRequest() {
     CreateUserRequest request = new CreateUserRequest();
-    request.setUsername("LocNB3");
+    request.setUsername("VietDC1");
     request.setPassword("admin");
     request.setConfirmPassword("admin");
     ResponseEntity<User> response = userController.createUser(request);
@@ -93,9 +93,9 @@ public class UserControllerTest {
   @Test
   public void create_user_password_confirm_mismatch() {
     CreateUserRequest request = new CreateUserRequest();
-    request.setUsername("LocNB3");
+    request.setUsername("VietDC1");
     request.setPassword("admin");
-    request.setConfirmPassword("Admin");
+    request.setConfirmPassword("admin");
     ResponseEntity<User> response = userController.createUser(request);
     assertEquals(400, response.getStatusCodeValue());
   }
